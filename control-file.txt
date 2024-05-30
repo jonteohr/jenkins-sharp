@@ -1,0 +1,5 @@
+# Build the library
+build_dotnet jenkins_api_cs.csproj
+
+# Push to NuGet repo
+nuget_push bin\Release\*.nupkg
