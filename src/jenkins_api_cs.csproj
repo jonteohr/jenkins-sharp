@@ -15,6 +15,7 @@
         <PackageTags>jenkins sharp c api rest status info build job wrapper</PackageTags>
         <IsPackable>true</IsPackable>
         <PackageReadmeFile>README.md</PackageReadmeFile>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         
     </PropertyGroup>
 
