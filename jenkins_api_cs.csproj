@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <Nullable>disable</Nullable>
+        <TargetFrameworks>net6.0;net8.0;net461</TargetFrameworks>
+        <LangVersion>7.3</LangVersion>
+        <Title>Jenkins.Sharp</Title>
+        <PackageId>jenkins.sharp</PackageId>
+        <Version>1.0.0</Version>
+        <Authors>Jonteohr</Authors>
+        <Description>Basic C# wrapper for using Jenkins HTTP/REST API.</Description>
+        <PackageProjectUrl>https://github.com/jonteohr/jenkins-sharp</PackageProjectUrl>
+        <PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
+        <Copyright>2024 Jonathan Öhrström</Copyright>
+        <PackageTags>jenkins sharp c api rest status info build job wrapper</PackageTags>
+        <IsPackable>true</IsPackable>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+      <PackageReference Include="System.Net.Http" Version="4.3.4" />
+      <None Include="README.md" Pack="true" PackagePath="\" />
+    </ItemGroup>
+
+</Project>
