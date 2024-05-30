@@ -1,4 +1,4 @@
-# jenkins-sharp
+# jenkins-sharp [![](https://jenkins.jonteohr.xyz/view/NuGet/job/JENKINS.SHARP_TAGS/badge/icon)](https://jenkins.jonteohr.xyz/view/NuGet/job/JENKINS.SHARP_TAGS/)
 Basic C# wrapper for using Jenkins HTTP/REST API.
 
 ## Setup
