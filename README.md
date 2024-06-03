@@ -38,3 +38,14 @@ var buildStatus = await client.GetBuildInfoAsync(
 Console.WriteLine($"{jobStatus.FullName} is currently {jobStatus.Color}.");
 Console.WriteLine($"Last successful is: #{jobStatus.LastSuccessfulBuild.Number}");
 ```
+
+You can also iterate through all jobs on the server, or in a folder:
+```csharp
+var jobCollection = await client.GetAllJobsAsync(); // To fetch jobs inside a folder, use the overload GetAllJobs(string)
+
+foreach(var job in jobCollection) {
+    Console.WriteLine($"Name: {job.Name}");
+    Console.WriteLine($"Url: {job.Url}");
+    Console.WriteLine($"Job type: {job.JobType}");
+}
+```
