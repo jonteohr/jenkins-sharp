@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using jenkins_api_cs.Collections;
 using jenkins_api_cs.HttpRequests;
 using jenkins_api_cs.Responses;
-using Newtonsoft.Json;
 
 namespace jenkins_api_cs
 {
@@ -76,9 +75,10 @@ namespace jenkins_api_cs
         }
 
         /// <summary>
-        /// 
+        /// Asynchronously get all jobs on the jenkins server
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A <see cref="JobCollection"/> containing <see cref="JobInfo"/> instances filled with data on all jobs</returns>
+        /// <seealso cref="GetAllJobsAsync(string)"/>
         public async Task<JobCollection> GetAllJobsAsync()
         {
             var apiUrl = JenkinsUrl + ApiEndString;
@@ -87,10 +87,11 @@ namespace jenkins_api_cs
         }
         
         /// <summary>
-        /// 
+        /// Asynchronously get all jobs in a specified folder
         /// </summary>
-        /// <param name="folderName"></param>
-        /// <returns></returns>
+        /// <param name="folderName">Name of the folder to traverse.</param>
+        /// <returns>A <see cref="JobCollection"/> containing <see cref="JobInfo"/> instances filled with data on all jobs</returns>
+        /// <seealso cref="GetAllJobsAsync()"/>
         public async Task<JobCollection> GetAllJobsAsync(string folderName)
         {
             var apiUrl = JenkinsUrl + $"/job/{folderName}" + ApiEndString;

@@ -5,6 +5,9 @@ using Newtonsoft.Json.Linq;
 
 namespace jenkins_api_cs.Responses
 {
+    /// <summary>
+    /// The current status of the build, in color
+    /// </summary>
     public enum BuildStatus
     {
         Notbuilt,
@@ -63,7 +66,7 @@ namespace jenkins_api_cs.Responses
         public JobType JobType { get; set; }
         public JobCollection Jobs { get; set; }
 
-        public static JobInfo FromJson(JToken json)
+        internal static JobInfo FromJson(JToken json)
         {
             var _class = json["_class"]?.ToString().Split('.').Last();
             if (!Enum.TryParse(_class, out JobType jobtype))
