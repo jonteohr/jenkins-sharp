@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example", "Example\Example.csproj", "{49457D90-0A23-4A7D-AE3A-943F142167CF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "jenkins_api_cs", "src\jenkins_api_cs.csproj", "{19DAD249-7A88-4222-AA34-D9DE35A07E6F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{49457D90-0A23-4A7D-AE3A-943F142167CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49457D90-0A23-4A7D-AE3A-943F142167CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49457D90-0A23-4A7D-AE3A-943F142167CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49457D90-0A23-4A7D-AE3A-943F142167CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19DAD249-7A88-4222-AA34-D9DE35A07E6F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19DAD249-7A88-4222-AA34-D9DE35A07E6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19DAD249-7A88-4222-AA34-D9DE35A07E6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19DAD249-7A88-4222-AA34-D9DE35A07E6F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
