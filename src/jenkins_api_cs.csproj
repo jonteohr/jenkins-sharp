@@ -6,7 +6,7 @@
         <LangVersion>7.3</LangVersion>
         <Title>Jenkins.Sharp</Title>
         <PackageId>jenkins.sharp</PackageId>
-        <Version>1.0.1</Version>
+        <Version>1.0.2</Version>
         <Authors>Jonteohr</Authors>
         <Description>Basic C# wrapper for using Jenkins HTTP/REST API.</Description>
         <PackageProjectUrl>https://github.com/jonteohr/jenkins-sharp</PackageProjectUrl>
@@ -17,6 +17,10 @@
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <DocumentationFile>bin\Release\jenkins_api_cs.xml</DocumentationFile>
     </PropertyGroup>
 
     <ItemGroup>

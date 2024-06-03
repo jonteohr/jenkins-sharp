@@ -23,8 +23,17 @@ var client = new JenkinsClientBuilder()
 
 Then to query a specific build:
 ```csharp
-var jobName = "YOUR_JOB_NAME";
-var jobStatus = await client.GetJobInfo(jobName);
+var MyJobName = "YOUR_JOB_NAME";
+
+// Fetches information regarding a specific job and its recent status
+var jobStatus = await client.GetJobInfoAsync(
+    jobName: MyJobName
+);
+// Fetches information regarding a specific build inside a job
+var buildStatus = await client.GetBuildInfoAsync(
+    jobName: MyJobName,
+    buildNo: jobStatus.LastSuccessfulBuild.Number
+);
 
 Console.WriteLine($"{jobStatus.FullName} is currently {jobStatus.Color}.");
 Console.WriteLine($"Last successful is: #{jobStatus.LastSuccessfulBuild.Number}");
