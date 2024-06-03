@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using jenkins_api_cs.Collections;
+using jenkins_api_cs.HttpRequests;
 using jenkins_api_cs.Responses;
 using Newtonsoft.Json;
 
@@ -29,7 +30,7 @@ namespace jenkins_api_cs
         public async Task<JobInfo> GetJobInfoAsync(string jobName)
         {
             var apiUrl = JenkinsUrl + $"/job/{jobName}" + ApiEndString;
-            var jobInfo = await HttpGet.Get<JobInfo>(apiUrl);
+            var jobInfo = await HttpRequest.GetJobInfo(apiUrl);
             
             return jobInfo;
         }
@@ -59,7 +60,7 @@ namespace jenkins_api_cs
         {
             var apiUrl = JenkinsUrl + $"/job/{jobName}/{buildNo}" + ApiEndString;
 
-            return await HttpGet.Get<BuildInfo>(apiUrl);
+            return await HttpRequest.Get<BuildInfo>(apiUrl);
         }
 
         /// <summary>
@@ -82,10 +83,19 @@ namespace jenkins_api_cs
         {
             var apiUrl = JenkinsUrl + ApiEndString;
 
-            var Coll = await HttpGet.Get<JobCollection>(apiUrl);
+            return await HttpRequest.GetJobs(apiUrl);
+        }
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="folderName"></param>
+        /// <returns></returns>
+        public async Task<JobCollection> GetAllJobsAsync(string folderName)
+        {
+            var apiUrl = JenkinsUrl + $"/job/{folderName}" + ApiEndString;
 
-            Console.WriteLine(JsonConvert.SerializeObject(Coll));
-            return Coll;
+            return await HttpRequest.GetJobs(apiUrl);
         }
     }
 
