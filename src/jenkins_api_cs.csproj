@@ -6,14 +6,14 @@
         <LangVersion>7.3</LangVersion>
         <Title>Jenkins.Sharp</Title>
         <PackageId>jenkins.sharp</PackageId>
-        <Version>1.0.2</Version>
+        <Version>1.0.3</Version>
         <Authors>Jonteohr</Authors>
         <Description>Basic C# wrapper for using Jenkins HTTP/REST API.</Description>
         <RepositoryUrl>https://github.com/jonteohr/jenkins-sharp.git</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
         <Copyright>2024 Jonathan Öhrström</Copyright>
-        <PackageTags>jenkins sharp c api rest status info build job wrapper</PackageTags>
+        <PackageTags>jenkins sharp csharp api rest status info build job wrapper</PackageTags>
         <IsPackable>true</IsPackable>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
