@@ -10,16 +10,20 @@ namespace jenkins_api_cs.Responses
     /// </summary>
     public enum BuildStatus
     {
-        Disabled,
-        Notbuilt,
         Red,
-        Blue,
+        Red_Anime,
         Yellow,
+        Yellow_Anime,
+        Blue,
+        Blue_Anime,
         Grey,
-        Red_anime,
-        Blue_anime,
-        Yellow_anime,
-        Grey_anime
+        Grey_Anime,
+        Disabled,
+        Disabled_Anime,
+        Aborted,
+        Aborted_Anime,
+        Notbuilt,
+        Notbuilt_Anime,
     }
 
     /// <summary>
@@ -49,9 +53,18 @@ namespace jenkins_api_cs.Responses
         WorkflowMultiBranchProject
     }
 
+    /// <summary>
+    /// Data class for specific builds
+    /// </summary>
     public class Build
     {
+        /// <summary>
+        /// The incrementing build-number for this build
+        /// </summary>
         public int Number { get; set; }
+        /// <summary>
+        /// The URL to this build
+        /// </summary>
         public string Url { get; set; }
     }
     
