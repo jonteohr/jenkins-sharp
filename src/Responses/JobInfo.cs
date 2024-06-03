@@ -10,6 +10,7 @@ namespace jenkins_api_cs.Responses
     /// </summary>
     public enum BuildStatus
     {
+        Disabled,
         Notbuilt,
         Red,
         Blue,
