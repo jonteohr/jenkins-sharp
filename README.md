@@ -14,6 +14,8 @@ NuGet\Install-Package jenkins.sharp
 ```
 
 ## Usage
+You can find the [example project here](Example).
+
 Create the `JenkinsClient` that you need to query build statuses:
 ```csharp
 var client = new JenkinsClientBuilder()
