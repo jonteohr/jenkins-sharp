@@ -23,7 +23,7 @@ namespace jenkins_api_cs.Responses
         Aborted,
         Aborted_Anime,
         Notbuilt,
-        Notbuilt_Anime,
+        Notbuilt_Anime
     }
 
     /// <summary>
