@@ -18,6 +18,16 @@ namespace jenkins_api_cs
         public string JenkinsUrl { get; internal set; }
 
         /// <summary>
+        /// Main class constructor for the client
+        /// </summary>
+        /// <exception cref="ArgumentException">The client was not setup with a url to the jenkins instance</exception>
+        public JenkinsClient()
+        {
+            if(string.IsNullOrEmpty(JenkinsUrl)) // If the client was setup without proper configuration
+                throw new ArgumentException("No url to the jenkins instance was supplied.");
+        }
+        
+        /// <summary>
         /// Asynchronously gets the latest information regarding a specific job.
         /// </summary>
         /// <param name="jobName">The name of the job to fetch. If the job is put inside folders, you'll need to include them in the name.</param>
@@ -79,6 +89,8 @@ namespace jenkins_api_cs
         /// </summary>
         /// <returns>A <see cref="JobCollection"/> containing <see cref="JobInfo"/> instances filled with data on all jobs</returns>
         /// <seealso cref="GetAllJobsAsync(string)"/>
+        /// <seealso cref="GetAllJobs(string)"/>
+        /// <seealso cref="GetAllJobs()"/>
         public async Task<JobCollection> GetAllJobsAsync()
         {
             var apiUrl = JenkinsUrl + ApiEndString;
@@ -92,11 +104,38 @@ namespace jenkins_api_cs
         /// <param name="folderName">Name of the folder to traverse.</param>
         /// <returns>A <see cref="JobCollection"/> containing <see cref="JobInfo"/> instances filled with data on all jobs</returns>
         /// <seealso cref="GetAllJobsAsync()"/>
+        /// <seealso cref="GetAllJobs()"/>
+        /// <seealso cref="GetAllJobs(string)"/>
         public async Task<JobCollection> GetAllJobsAsync(string folderName)
         {
             var apiUrl = JenkinsUrl + $"/job/{folderName}" + ApiEndString;
 
             return await HttpRequest.GetJobs(apiUrl);
+        }
+        
+        /// <summary>
+        /// Get all jobs on the jenkins server
+        /// </summary>
+        /// <returns>A <see cref="JobCollection"/> containing <see cref="JobInfo"/> instances filled with data on all jobs</returns>
+        /// <seealso cref="GetAllJobs(string)"/>
+        /// <seealso cref="GetAllJobsAsync()"/>
+        /// <seealso cref="GetAllJobsAsync(string)"/>
+        public JobCollection GetAllJobs()
+        {
+            return GetAllJobsAsync().Result;
+        }
+        
+        /// <summary>
+        /// Asynchronously get all jobs in a specified folder
+        /// </summary>
+        /// <param name="folderName">Name of the folder to traverse.</param>
+        /// <returns>A <see cref="JobCollection"/> containing <see cref="JobInfo"/> instances filled with data on all jobs</returns>
+        /// <seealso cref="GetAllJobs()"/>
+        /// <seealso cref="GetAllJobsAsync()"/>
+        /// <seealso cref="GetAllJobsAsync(string)"/>
+        public JobCollection GetAllJobs(string folderName)
+        {
+            return GetAllJobsAsync(folderName).Result;
         }
     }
 
@@ -117,7 +156,7 @@ namespace jenkins_api_cs
         {
             if (string.IsNullOrEmpty(_url))
             {
-                throw new ArgumentException("No url to API was supplied.");
+                throw new ArgumentException("No url to the jenkins instance was supplied.");
             }
             
             return new JenkinsClient { JenkinsUrl = _url };

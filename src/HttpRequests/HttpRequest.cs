@@ -29,7 +29,7 @@ namespace jenkins_api_cs.HttpRequests
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
-                    return new T();
+                    throw new Exception(ex.Message, ex);
                 }
             }
         }
@@ -52,7 +52,7 @@ namespace jenkins_api_cs.HttpRequests
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex);
-                    return null;
+                    throw new Exception(ex.Message, ex);
                 }
             }
         }
@@ -75,7 +75,7 @@ namespace jenkins_api_cs.HttpRequests
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
-                    return null;
+                    throw new Exception(ex.Message, ex);
                 }
             }
         }
