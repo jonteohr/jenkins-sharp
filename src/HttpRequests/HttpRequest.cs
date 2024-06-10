@@ -37,25 +37,6 @@ namespace jenkins_api_cs.HttpRequests
             var apiResponse = (JArray) JObject.Parse(response)["jobs"];
 
             return JobCollection.FromJson(apiResponse);
-            // using (var client = new HttpClient())
-            // {
-            //     try
-            //     {
-            //         var response = await client.GetAsync(url);
-            //         response.EnsureSuccessStatusCode();
-            //
-            //         var responseBody = await response.Content.ReadAsStringAsync();
-            //
-            //         var json = (JArray) JObject.Parse(responseBody)["jobs"];
-            //         
-            //         return JobCollection.FromJson(json);
-            //     }
-            //     catch (Exception ex)
-            //     {
-            //         Console.WriteLine(ex);
-            //         throw new Exception(ex.Message, ex);
-            //     }
-            // }
         }
 
         internal static async Task<BuildInfo> GetBuildInfo(string url)

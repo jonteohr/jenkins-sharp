@@ -58,9 +58,17 @@ namespace jenkins_api_cs.Responses
         /// If this build is currently building or not
         /// </summary>
         public bool Building { get; }
+        /// <summary>
+        /// If the build is currently in progress
+        /// </summary>
+        public bool InProgress { get; }
+        /// <summary>
+        /// The full display name for this build, including job name
+        /// </summary>
+        public string FullDisplayName { get; }
         
         [JsonConstructor]
-        internal BuildInfo(bool building, string builtOn, string result, string absoluteUrl, string fullName, List<Culprits> culprits, int duration)
+        internal BuildInfo(bool building, string builtOn, string result, string absoluteUrl, string fullName, List<Culprits> culprits, int duration, bool inProgress, string fullDisplayName)
         {
             Building = building;
             BuiltOn = builtOn;
@@ -69,6 +77,8 @@ namespace jenkins_api_cs.Responses
             FullName = fullName;
             Culprits = culprits;
             Duration = duration;
+            InProgress = inProgress;
+            FullDisplayName = fullDisplayName;
         }
     }
 }
