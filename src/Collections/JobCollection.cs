@@ -13,7 +13,7 @@ namespace jenkins_api_cs.Collections
         internal static JobCollection FromJson(JArray jsonObject)
         {
             var result = new JobCollection();
-            result.AddRange(jsonObject.Select(JobInfo.FromJson));
+            result.AddRange(jsonObject.Select(ResponseBase.JobInfoFromJson));
 
             return result;
         }

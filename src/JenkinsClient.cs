@@ -15,16 +15,18 @@ namespace jenkins_api_cs
         /// <summary>
         /// The configured URL to the jenkins host
         /// </summary>
-        public string JenkinsUrl { get; internal set; }
+        public string JenkinsUrl { get; }
 
         /// <summary>
         /// Main class constructor for the client
         /// </summary>
         /// <exception cref="JenkinsException">The client was not setup with a url to the jenkins instance</exception>
-        public JenkinsClient()
+        internal JenkinsClient(string url)
         {
-            if(string.IsNullOrEmpty(JenkinsUrl)) // If the client was setup without proper configuration
+            if (string.IsNullOrEmpty(url)) // If the client was setup without proper configuration
                 throw new JenkinsException("No url to the jenkins instance was supplied.", null);
+
+            JenkinsUrl = url;
         }
         
         /// <summary>
@@ -69,7 +71,7 @@ namespace jenkins_api_cs
         {
             var apiUrl = JenkinsUrl + $"/job/{jobName}/{buildNo}" + ApiEndString;
 
-            return await HttpRequest.Get<BuildInfo>(apiUrl);
+            return await HttpRequest.GetBuildInfo(apiUrl);
         }
 
         /// <summary>
@@ -159,7 +161,7 @@ namespace jenkins_api_cs
                 throw new JenkinsException("No url to the jenkins instance was supplied.", null);
             }
             
-            return new JenkinsClient { JenkinsUrl = _url };
+            return new JenkinsClient(_url);
         }
 
         /// <summary>

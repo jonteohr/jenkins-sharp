@@ -1,7 +1,5 @@
-using System;
-using System.Linq;
 using jenkins_api_cs.Collections;
-using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 namespace jenkins_api_cs.Responses
 {
@@ -99,71 +97,122 @@ namespace jenkins_api_cs.Responses
     /// <summary>
     /// Data class for specific builds
     /// </summary>
-    public class Build
+    public class Build : ResponseBase
     {
         /// <summary>
         /// The incrementing build-number for this build
         /// </summary>
-        public int Number { get; set; }
+        public int Number { get; }
         /// <summary>
         /// The URL to this build
         /// </summary>
-        public string Url { get; set; }
+        public string Url { get; }
+        
+        [JsonConstructor]
+        internal Build(int number, string url)
+        {
+            Number = number;
+            Url = url;
+        }
     }
     
     /// <summary>
     /// Main class of job information
     /// </summary>
-    public class JobInfo
+    public class JobInfo : ResponseBase
     {
         /// <summary>
         /// The full name of the job.
         /// </summary>
-        public string FullName { get; set; }
+        public string FullName { get; }
+
         /// <summary>
         /// The name of the job (display-name).
         /// </summary>
-        public string Name { get; set; }
+        public string Name { get; }
+
         /// <summary>
         /// The current color of the job.
         /// </summary>
-        public BuildStatus Color { get; set; }
+        public BuildStatus Color { get; }
         /// <summary>
         /// The last build.
         /// </summary>
-        public Build LastBuild { get; set; }
+        public Build LastBuild { get; }
         /// <summary>
         /// The last failed build for this job.
         /// </summary>
-        public Build LastFailedBuild { get; set; }
+        public Build LastFailedBuild { get; }
         /// <summary>
         /// The last successful build for this job.
         /// </summary>
-        public Build LastSuccessfulBuild { get; set; }
+        public Build LastSuccessfulBuild { get; }
         /// <summary>
         /// The URL to the job.
         /// </summary>
-        public string Url { get; set; }
+        public string Url { get; }
         /// <summary>
         /// The type of job this is.
         /// </summary>
-        public JobType JobType { get; set; }
+        public JobType JobType { get; internal set; }
         /// <summary>
         /// A collection of sub-jobs contained in this job.
         /// If this is a folder, this collection contains all jobs within said folder.
         /// </summary>
-        public JobCollection Jobs { get; set; }
+        public JobCollection Jobs { get; }
+        /// <summary>
+        /// Collection of builds that has run
+        /// </summary>
+        public BuildCollection Builds { get; }
+        /// <summary>
+        /// The description set for this job
+        /// </summary>
+        public string Description { get; }
+        /// <summary>
+        /// If this job is currently in queue to build
+        /// </summary>
+        public bool InQueue { get; }
+        /// <summary>
+        /// The number that will be used for the next build
+        /// </summary>
+        public int NextBuildNumber { get; }
+        /// <summary>
+        /// If this job is disabled
+        /// </summary>
+        public bool Disabled { get; }
+        /// <summary>
+        /// Jobs that will be triggered once this job has finished
+        /// </summary>
+        public JobCollection DownstreamProjects { get; }
+        /// <summary>
+        /// Jobs that trigger this job once they complete
+        /// </summary>
+        public JobCollection UpstreamProjects { get; }
+        /// <summary>
+        /// If the job allows concurrent builds
+        /// </summary>
+        public bool ConcurrentBuild { get; }
 
-        internal static JobInfo FromJson(JToken json)
+        [JsonConstructor]
+        internal JobInfo(string name, string fullName, BuildStatus color, Build lastBuild, Build lastFailedBuild, Build lastSuccessfulBuild, string url, JobType jobType, JobCollection jobs, BuildCollection builds, string description, bool inQueue, int nextBuildNumber, bool disabled, JobCollection downstreamProjects, JobCollection upstreamProjects, bool concurrentBuild)
         {
-            var _class = json["_class"]?.ToString().Split('.').Last();
-            if (!Enum.TryParse(_class, out JobType jobtype))
-                jobtype = JobType.Unknown;
-                
-            var jobi = json.ToObject<JobInfo>();
-            jobi.JobType = jobtype;
-
-            return jobi;
+            Name = name;
+            FullName = fullName;
+            Color = color;
+            LastBuild = lastBuild;
+            LastFailedBuild = lastFailedBuild;
+            LastSuccessfulBuild = lastSuccessfulBuild;
+            Url = url;
+            JobType = jobType;
+            Jobs = jobs;
+            Builds = builds;
+            Description = description;
+            InQueue = inQueue;
+            NextBuildNumber = nextBuildNumber;
+            Disabled = disabled;
+            DownstreamProjects = downstreamProjects;
+            UpstreamProjects = upstreamProjects;
+            ConcurrentBuild = concurrentBuild;
         }
     }
 }
