@@ -1,6 +1,6 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using jenkins_api_cs.Collections;
+using jenkins_api_cs.Exceptions;
 using jenkins_api_cs.HttpRequests;
 using jenkins_api_cs.Responses;
 
@@ -20,11 +20,11 @@ namespace jenkins_api_cs
         /// <summary>
         /// Main class constructor for the client
         /// </summary>
-        /// <exception cref="ArgumentException">The client was not setup with a url to the jenkins instance</exception>
+        /// <exception cref="JenkinsException">The client was not setup with a url to the jenkins instance</exception>
         public JenkinsClient()
         {
             if(string.IsNullOrEmpty(JenkinsUrl)) // If the client was setup without proper configuration
-                throw new ArgumentException("No url to the jenkins instance was supplied.");
+                throw new JenkinsException("No url to the jenkins instance was supplied.", null);
         }
         
         /// <summary>
@@ -150,13 +150,13 @@ namespace jenkins_api_cs
         /// Builds the client with the configured settings
         /// </summary>
         /// <returns>Configured instance of a <see cref="JenkinsClient"/></returns>
-        /// <exception cref="ArgumentException">If the builder hasn't been configured enough before building.
+        /// <exception cref="JenkinsException">If the builder hasn't been configured enough before building.
         /// For example; not setting a URL to the jenkins instance.</exception>
         public JenkinsClient Build()
         {
             if (string.IsNullOrEmpty(_url))
             {
-                throw new ArgumentException("No url to the jenkins instance was supplied.");
+                throw new JenkinsException("No url to the jenkins instance was supplied.", null);
             }
             
             return new JenkinsClient { JenkinsUrl = _url };

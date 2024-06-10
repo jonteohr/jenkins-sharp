@@ -10,19 +10,62 @@ namespace jenkins_api_cs.Responses
     /// </summary>
     public enum BuildStatus
     {
+        /// <summary>
+        /// Job has failed
+        /// </summary>
         Red,
+        /// <summary>
+        /// Job has failed and is now re-building
+        /// </summary>
         Red_Anime,
+        /// <summary>
+        /// Job is unstable
+        /// </summary>
         Yellow,
+        /// <summary>
+        /// Job is unstable and is now re-building
+        /// </summary>
         Yellow_Anime,
+        /// <summary>
+        /// Job is stable
+        /// </summary>
         Blue,
+        /// <summary>
+        /// Job is stable and re-building
+        /// </summary>
         Blue_Anime,
+        /// <summary>
+        /// Job has no previous status
+        /// </summary>
         Grey,
+        /// <summary>
+        /// Job has no previous state and is now re-building.
+        /// Could be first build!
+        /// </summary>
         Grey_Anime,
+        /// <summary>
+        /// Job is disabled
+        /// </summary>
         Disabled,
+        /// <summary>
+        /// Job is disabled but is still building
+        /// </summary>
         Disabled_Anime,
+        /// <summary>
+        /// Job was aborted
+        /// </summary>
         Aborted,
+        /// <summary>
+        /// Job was aborted but is re-building
+        /// </summary>
         Aborted_Anime,
+        /// <summary>
+        /// Job has not run yet
+        /// </summary>
         Notbuilt,
+        /// <summary>
+        /// Job is running its first build
+        /// </summary>
         Notbuilt_Anime
     }
 
@@ -68,16 +111,47 @@ namespace jenkins_api_cs.Responses
         public string Url { get; set; }
     }
     
+    /// <summary>
+    /// Main class of job information
+    /// </summary>
     public class JobInfo
     {
+        /// <summary>
+        /// The full name of the job.
+        /// </summary>
         public string FullName { get; set; }
+        /// <summary>
+        /// The name of the job (display-name).
+        /// </summary>
         public string Name { get; set; }
+        /// <summary>
+        /// The current color of the job.
+        /// </summary>
         public BuildStatus Color { get; set; }
+        /// <summary>
+        /// The last build.
+        /// </summary>
         public Build LastBuild { get; set; }
+        /// <summary>
+        /// The last failed build for this job.
+        /// </summary>
         public Build LastFailedBuild { get; set; }
+        /// <summary>
+        /// The last successful build for this job.
+        /// </summary>
         public Build LastSuccessfulBuild { get; set; }
+        /// <summary>
+        /// The URL to the job.
+        /// </summary>
         public string Url { get; set; }
+        /// <summary>
+        /// The type of job this is.
+        /// </summary>
         public JobType JobType { get; set; }
+        /// <summary>
+        /// A collection of sub-jobs contained in this job.
+        /// If this is a folder, this collection contains all jobs within said folder.
+        /// </summary>
         public JobCollection Jobs { get; set; }
 
         internal static JobInfo FromJson(JToken json)
