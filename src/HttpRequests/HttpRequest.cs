@@ -2,6 +2,7 @@ using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using jenkins_api_cs.Collections;
+using jenkins_api_cs.Exceptions;
 using jenkins_api_cs.Responses;
 using Newtonsoft.Json.Linq;
 
@@ -23,10 +24,13 @@ namespace jenkins_api_cs.HttpRequests
 
                     return responseBody;
                 }
+                catch (HttpRequestException ex)
+                {
+                    throw new JobNotFoundException(ex.Message, ex);
+                }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.Message);
-                    throw new Exception(ex.Message, ex);
+                    throw new JenkinsException(ex.Message, ex);
                 }
             }
         }
