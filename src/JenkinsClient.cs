@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using jenkins_api_cs.Collections;
 using jenkins_api_cs.Exceptions;
 using jenkins_api_cs.HttpRequests;
@@ -20,10 +22,10 @@ namespace jenkins_api_cs
         /// <summary>
         /// Main class constructor for the client
         /// </summary>
-        /// <exception cref="JenkinsException">The client was not setup with a url to the jenkins instance</exception>
+        /// <exception cref="JenkinsException">The client was not setup with an url to the jenkins instance</exception>
         internal JenkinsClient(string url)
         {
-            if (string.IsNullOrEmpty(url)) // If the client was setup without proper configuration
+            if (string.IsNullOrEmpty(url)) // If the client was set up without proper configuration
                 throw new JenkinsException("No url to the jenkins instance was supplied.", null);
 
             JenkinsUrl = url;
@@ -37,13 +39,33 @@ namespace jenkins_api_cs
         /// GetJobInfoAsync("My_job_name"); GetJobInfoAsync("folder/job/My_Job_name");
         /// </example>
         /// <returns>A <see cref="JobInfo"/> instance with data on the requested job</returns>
-        /// <seealso cref="GetJobInfo"/>
+        /// <seealso cref="GetJobInfo(string)"/>
         public async Task<JobInfo> GetJobInfoAsync(string jobName)
         {
             var apiUrl = JenkinsUrl + $"/job/{jobName}" + ApiEndString;
             var jobInfo = await HttpRequest.GetJobInfo(apiUrl);
             
             return jobInfo;
+        }
+
+        /// <summary>
+        /// Asynchronously gets the latest information regarding several jobs.
+        /// </summary>
+        /// <param name="jobs">The name of the job to fetch. If the job is put inside folders, you'll need to include them in the name.</param>
+        /// <example>
+        /// GetJobInfoAsync("My_job_name", "Another_Job"); GetJobInfoAsync("folder/job/My_Job_name", "Production/Job/A_Job_Name");
+        /// </example>
+        /// <returns>A <see cref="Dictionary{TKey,TValue}"/> instance with data on the requested jobs</returns>
+        /// <seealso cref="GetJobInfoAsync(string)"/>
+        public async Task<Dictionary<string, JobInfo>> GetJobInfoAsync(params string[] jobs)
+        {
+            var dict = new Dictionary<string, JobInfo>();
+            foreach (var job in jobs)
+            {
+                dict.Add(job, await GetJobInfoAsync(job));
+            }
+
+            return dict;
         }
         
         /// <summary>
@@ -54,10 +76,24 @@ namespace jenkins_api_cs
         /// GetJobInfoAsync("My_job_name"); GetJobInfoAsync("folder/job/My_Job_name");
         /// </example>
         /// <returns>A <see cref="JobInfo"/> instance with data on the requested job</returns>
-        /// <seealso cref="GetJobInfoAsync"/>
+        /// <seealso cref="GetJobInfoAsync(string)"/>
         public JobInfo GetJobInfo(string jobName)
         {
             return GetJobInfoAsync(jobName).Result;
+        }
+
+        /// <summary>
+        /// Gets the latest information regarding a specific job.
+        /// </summary>
+        /// <param name="jobs">The names of the jobs to fetch. If the job is put inside folders, you'll need to include them in the name.</param>
+        /// <example>
+        /// GetJobInfo("My_job_name", "Another_Job"); GetJobInfo("folder/job/My_Job_name", "Production/Job/A_Job_Name");
+        /// </example>
+        /// <returns>A <see cref="JobInfo"/> instance with data on the requested job</returns>
+        /// <seealso cref="GetJobInfoAsync(string)"/>
+        public Dictionary<string, JobInfo> GetJobInfo(params string[] jobs)
+        {
+            return jobs.ToDictionary(job => job, GetJobInfo);
         }
 
         /// <summary>
