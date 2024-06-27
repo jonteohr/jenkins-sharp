@@ -150,6 +150,57 @@ namespace jenkins_api_cs
 
             return await HttpRequest.GetJobs(apiUrl);
         }
+
+        /// <summary>
+        /// Asynchronously fetches all jobs within a specific view
+        /// </summary>
+        /// <param name="viewName">The name of the view</param>
+        /// <returns>A <see cref="JobCollection"/> containing <see cref="JobInfo"/> instances filled with data on all jobs</returns>
+        /// <seealso cref="GetViewJobs"/>
+        /// <seealso cref="GetUserViewJobsAsync"/>
+        public async Task<JobCollection> GetViewJobsAsync(string viewName)
+        {
+            var apiUrl = JenkinsUrl + $"/view/{viewName}" + ApiEndString;
+
+            return await HttpRequest.GetJobs(apiUrl);
+        }
+
+        /// <summary>
+        /// Fetches all jobs within a specific view
+        /// </summary>
+        /// <param name="viewName">The name of the view</param>
+        /// <returns>A <see cref="JobCollection"/> containing <see cref="JobInfo"/> instances filled with data on all jobs</returns>
+        /// <seealso cref="GetViewJobsAsync"/>
+        public JobCollection GetViewJobs(string viewName)
+        {
+            return GetViewJobsAsync(viewName).Result;
+        }
+
+        /// <summary>
+        /// Asynchronously fetches all jobs within a specific users custom views
+        /// </summary>
+        /// <param name="username">The username</param>
+        /// <param name="view">The name of the view to fetch</param>
+        /// <returns>A <see cref="JobCollection"/> containing <see cref="JobInfo"/> instances filled with data on all jobs</returns>
+        /// <seealso cref="GetViewJobsAsync"/>
+        public async Task<JobCollection> GetUserViewJobsAsync(string username, string view)
+        {
+            var apiUrl = JenkinsUrl + $"/user/{username}/my-views/view/{view}" + ApiEndString;
+
+            return await HttpRequest.GetJobs(apiUrl);
+        }
+        
+        /// <summary>
+        /// Fetches all jobs within a specific users custom views
+        /// </summary>
+        /// <param name="username">The username</param>
+        /// <param name="view">The name of the view to fetch</param>
+        /// <returns>A <see cref="JobCollection"/> containing <see cref="JobInfo"/> instances filled with data on all jobs</returns>
+        /// <seealso cref="GetViewJobsAsync"/>
+        public JobCollection GetUserViewJobs(string username, string view)
+        {
+            return GetUserViewJobsAsync(username, view).Result;
+        }
         
         /// <summary>
         /// Get all jobs on the jenkins server
