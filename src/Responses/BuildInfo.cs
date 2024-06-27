@@ -69,10 +69,10 @@ namespace jenkins_api_cs.Responses
         /// <summary>
         /// The timestamp of when this build started
         /// </summary>
-        public int Timestamp { get; }
+        public long Timestamp { get; }
         
         [JsonConstructor]
-        internal BuildInfo(bool building, string builtOn, string result, string absoluteUrl, string fullName, List<Culprits> culprits, int duration, bool inProgress, string fullDisplayName, int timestamp)
+        internal BuildInfo(bool building, string builtOn, string result, string absoluteUrl, string fullName, List<Culprits> culprits, int duration, bool inProgress, string fullDisplayName, long timestamp)
         {
             Building = building;
             BuiltOn = builtOn;
