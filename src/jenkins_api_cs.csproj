@@ -6,7 +6,7 @@
         <LangVersion>7.3</LangVersion>
         <Title>Jenkins.Sharp</Title>
         <PackageId>jenkins.sharp</PackageId>
-        <Version>1.1.0</Version>
+        <Version>1.1.1</Version>
         <Authors>Jonteohr</Authors>
         <Description>Basic C# wrapper for using Jenkins HTTP/REST API.</Description>
         <RepositoryUrl>https://github.com/jonteohr/jenkins-sharp.git</RepositoryUrl>

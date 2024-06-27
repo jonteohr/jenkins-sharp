@@ -66,9 +66,13 @@ namespace jenkins_api_cs.Responses
         /// The full display name for this build, including job name
         /// </summary>
         public string FullDisplayName { get; }
+        /// <summary>
+        /// The timestamp of when this build started
+        /// </summary>
+        public int Timestamp { get; }
         
         [JsonConstructor]
-        internal BuildInfo(bool building, string builtOn, string result, string absoluteUrl, string fullName, List<Culprits> culprits, int duration, bool inProgress, string fullDisplayName)
+        internal BuildInfo(bool building, string builtOn, string result, string absoluteUrl, string fullName, List<Culprits> culprits, int duration, bool inProgress, string fullDisplayName, int timestamp)
         {
             Building = building;
             BuiltOn = builtOn;
@@ -79,6 +83,7 @@ namespace jenkins_api_cs.Responses
             Duration = duration;
             InProgress = inProgress;
             FullDisplayName = fullDisplayName;
+            Timestamp = timestamp;
         }
     }
 }
