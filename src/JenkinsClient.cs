@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using jenkins_api_cs.Authentication;
 using jenkins_api_cs.Collections;
 using jenkins_api_cs.Exceptions;
 using jenkins_api_cs.HttpRequests;
 using jenkins_api_cs.Responses;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace jenkins_api_cs
 {
@@ -14,21 +15,28 @@ namespace jenkins_api_cs
     public class JenkinsClient
     {
         private const string ApiEndString = "/api/json?pretty=true";
+        private JenkinsCredentials Credentials { get; }
         /// <summary>
         /// The configured URL to the jenkins host
         /// </summary>
         public string JenkinsUrl { get; }
 
         /// <summary>
+        /// Returns true if credentials has been configured
+        /// </summary>
+        public bool WithCredentials => Credentials != null;
+
+        /// <summary>
         /// Main class constructor for the client
         /// </summary>
         /// <exception cref="JenkinsException">The client was not setup with an url to the jenkins instance</exception>
-        internal JenkinsClient(string url)
+        internal JenkinsClient(string url, JenkinsCredentials credentials = null)
         {
             if (string.IsNullOrEmpty(url)) // If the client was set up without proper configuration
                 throw new JenkinsException("No url to the jenkins instance was supplied.", null);
 
             JenkinsUrl = url;
+            Credentials = credentials;
         }
         
         /// <summary>
@@ -43,7 +51,7 @@ namespace jenkins_api_cs
         public async Task<JobInfo> GetJobInfoAsync(string jobName)
         {
             var apiUrl = JenkinsUrl + $"/job/{jobName}" + ApiEndString;
-            var jobInfo = await HttpRequest.GetJobInfo(apiUrl);
+            var jobInfo = await HttpRequest.GetJobInfo(apiUrl, Credentials);
             
             return jobInfo;
         }
@@ -107,7 +115,7 @@ namespace jenkins_api_cs
         {
             var apiUrl = JenkinsUrl + $"/job/{jobName}/{buildNo}" + ApiEndString;
 
-            return await HttpRequest.GetBuildInfo(apiUrl);
+            return await HttpRequest.GetBuildInfo(apiUrl, Credentials);
         }
 
         /// <summary>
@@ -133,7 +141,7 @@ namespace jenkins_api_cs
         {
             var apiUrl = JenkinsUrl + ApiEndString;
 
-            return await HttpRequest.GetJobs(apiUrl);
+            return await HttpRequest.GetJobs(apiUrl, Credentials);
         }
         
         /// <summary>
@@ -148,7 +156,7 @@ namespace jenkins_api_cs
         {
             var apiUrl = JenkinsUrl + $"/job/{folderName}" + ApiEndString;
 
-            return await HttpRequest.GetJobs(apiUrl);
+            return await HttpRequest.GetJobs(apiUrl, Credentials);
         }
 
         /// <summary>
@@ -162,7 +170,7 @@ namespace jenkins_api_cs
         {
             var apiUrl = JenkinsUrl + $"/view/{viewName}" + ApiEndString;
 
-            return await HttpRequest.GetJobs(apiUrl);
+            return await HttpRequest.GetJobs(apiUrl, Credentials);
         }
 
         /// <summary>
@@ -187,7 +195,7 @@ namespace jenkins_api_cs
         {
             var apiUrl = JenkinsUrl + $"/user/{username}/my-views/view/{view}" + ApiEndString;
 
-            return await HttpRequest.GetJobs(apiUrl);
+            return await HttpRequest.GetJobs(apiUrl, Credentials);
         }
         
         /// <summary>
@@ -234,6 +242,7 @@ namespace jenkins_api_cs
     public class JenkinsClientBuilder
     {
         private string _url;
+        private JenkinsCredentials _credentials = null;
         
         /// <summary>
         /// Builds the client with the configured settings
@@ -248,7 +257,7 @@ namespace jenkins_api_cs
                 throw new JenkinsException("No url to the jenkins instance was supplied.", null);
             }
             
-            return new JenkinsClient(_url);
+            return new JenkinsClient(_url, _credentials);
         }
 
         /// <summary>
@@ -264,6 +273,18 @@ namespace jenkins_api_cs
                 fixedUrl = fixedUrl.Remove(url.Length - 1, 1);
             _url = fixedUrl;
             
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the credentials to use when communicating with the Jenkins instance.
+        /// This is optional.
+        /// </summary>
+        /// <param name="credentials">The credentials to use</param>
+        /// <returns><see cref="JenkinsClientBuilder"/> to continue configuration</returns>
+        public JenkinsClientBuilder WithCredentials(JenkinsCredentials credentials)
+        {
+            _credentials = credentials;
             return this;
         }
     }
