@@ -6,11 +6,11 @@ Add the api to your project from nuget
 
 **Dotnet CLI**
 ```
-dotnet add package jenkins.sharp
+dotnet add package jonteohr.jenkins-sharp
 ```
 **PackagerManager**
 ```
-NuGet\Install-Package jenkins.sharp
+NuGet\Install-Package jonteohr.jenkins-sharp
 ```
 
 ## Usage
