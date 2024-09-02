@@ -1,12 +1,14 @@
 ﻿using System;
 using jenkins_api_cs;
+using jenkins_api_cs.Authentication;
 using jenkins_api_cs.Exceptions;
 
 namespace Example
 {
     internal class Program
     {
-        private readonly JenkinsClient _client;
+        private readonly JenkinsClient m_client;
+        private readonly JenkinsCredentials m_credentials;
         private const string JenkinsUrl = "https://jenkins.jonteohr.xyz";
         
         static void Main(string[] args)
@@ -18,11 +20,15 @@ namespace Example
         {
             try
             {
-                _client = new JenkinsClientBuilder()
+                m_credentials = new JenkinsCredentials("username", "apiKey");
+
+                m_client = new JenkinsClientBuilder()
                     .SetUrl(JenkinsUrl)
+                    .WithCredentials(m_credentials) // OPTIONAL: Sets the credentials to use when sending requests to the Jenkins instance.
                     .Build();
 
                 FetchJobInfo();
+
                 Console.ReadKey();
             }
             catch (JenkinsException ex)
@@ -38,7 +44,7 @@ namespace Example
         private async void FetchJobInfo()
         {
             // Fetch data on a specific job
-            var myJob = await _client.GetJobInfoAsync("JENKINS.SHARP_TAGS");
+            var myJob = await m_client.GetJobInfoAsync("JENKINS.SHARP_TAGS");
             
             // Print out some data on the requested job
             Console.WriteLine($"Job {myJob.FullName} is currently {myJob.Color}!");
@@ -52,7 +58,7 @@ namespace Example
             Console.WriteLine($"Next build number is: #{myJob.NextBuildNumber}");
 
             // Get more data on the most recent build from said job
-            var lastBuild = await _client.GetBuildInfoAsync(myJob.Name, myJob.LastBuild.Number);
+            var lastBuild = await m_client.GetBuildInfoAsync(myJob.Name, myJob.LastBuild.Number);
             Console.WriteLine($"Last build was: {lastBuild.Result}"); // Result from the last job
             
             if(myJob.LastFailedBuild != null) // In case there's a logged "last failed build"
