@@ -5,7 +5,7 @@ namespace jenkins_api_cs.Exceptions
     /// <summary>
     /// Exception thrown when a job is requested but not found
     /// </summary>
-    public class JobNotFoundException : Exception
+    public class JobNotFoundException : JenkinsException
     {
         /// <summary>
         /// Main exception constructor

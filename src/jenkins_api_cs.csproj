@@ -6,7 +6,7 @@
         <LangVersion>Latest</LangVersion>
         <Title>Jonteohr.Jenkins-Sharp</Title>
         <PackageId>jonteohr.jenkins-sharp</PackageId>
-        <Version>9.0.1</Version>
+        <Version>9.0.2</Version>
         <Authors>Jonteohr</Authors>
         <Description>Basic C# wrapper for using Jenkins HTTP/REST API.</Description>
         <RepositoryUrl>https://github.com/jonteohr/jenkins-sharp.git</RepositoryUrl>
